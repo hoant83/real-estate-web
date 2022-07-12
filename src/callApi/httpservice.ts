@@ -49,7 +49,23 @@ export const updateUserInfo = async (dto: updateUser, id: number) => {
   const result = await http.put<updateUser>("/user/update/" + id, dto);
   return result;
 };
-
+// get estate according type
+export const getEstateByType = async (
+  type: string,
+  take: number,
+  skip: number
+) => {
+  let result = null;
+  if (type) {
+    result = await http.get<any>(
+      `/estate/?type=${type}&take=${take}&skip=${skip}`
+    );
+  }
+  if (!type) {
+    result = await http.get<any>(`/estate/?take=${take}&skip=${skip}`);
+  }
+  return result;
+};
 // get all estate (has filter)
 export const getEstateByFilter = async (
   category: string,
@@ -58,6 +74,7 @@ export const getEstateByFilter = async (
   take: number,
   skip: number
 ) => {
+  console.log(category, gerion, price, take, skip);
   let result: any;
   if (category === null && gerion !== null) {
     result = await http.get<any>(
@@ -71,8 +88,7 @@ export const getEstateByFilter = async (
         "&skip=" +
         skip
     );
-  }
-  if (category !== null && gerion === null) {
+  } else if (category !== null && gerion === null) {
     result = await http.get<any>(
       "/estate/filter/?" +
         "category=" +
@@ -84,8 +100,7 @@ export const getEstateByFilter = async (
         "&skip=" +
         skip
     );
-  }
-  if (category === null && gerion === null) {
+  } else if (category === null && gerion === null) {
     result = await http.get<any>(
       "/estate/filter/?" + "&price=" + price + "&take=" + take + "&skip=" + skip
     );

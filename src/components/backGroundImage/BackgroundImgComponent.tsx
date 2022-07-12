@@ -1,4 +1,4 @@
-import backgroundImg from "../../../src/assets/image/background-estate-img-main.jpg";
+import backgroundImg from "../../../src/assets/image/background999.jpg";
 function BackgroundImgComponent() {
   return (
     <>

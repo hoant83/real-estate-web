@@ -5,12 +5,12 @@ import location from "../../assets/image/location.png";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { getEstateByType } from "../../callApi/httpservice";
-function RentProductComponent() {
-  const [dataRentHouse, setDataRentHouse] = useState<any>(null);
+function BuyProductComponent() {
+  const [dataBuyHouse, setDataBuyHouse] = useState<any>(null);
   const getRentHouseHandler = async () => {
-    const type = "thue";
+    const type = "ban";
     const result = await getEstateByType(type, 4, 0);
-    setDataRentHouse(result?.data);
+    setDataBuyHouse(result?.data);
   };
   useEffect(() => {
     getRentHouseHandler();
@@ -18,7 +18,7 @@ function RentProductComponent() {
   return (
     <>
       <div className="xl:px-36 md:px-12 sm:px-6 xsm:px-4 flex justify-between items-center">
-        <p className="sm:text-2xl xsm:text-xl font-[700]">Nhà Cho Thuê</p>
+        <p className="sm:text-2xl xsm:text-xl font-[700]">Nhà Bán</p>
         <p>Xem thêm</p>
       </div>
       <div
@@ -31,8 +31,8 @@ function RentProductComponent() {
     xsm:py-4 xsm:px-2 xsm:flex xsm:items-center flex-wrap
     "
       >
-        {dataRentHouse
-          ? dataRentHouse.map((row: any, index: any) => (
+        {dataBuyHouse
+          ? dataBuyHouse.map((row: any, index: any) => (
               <div
                 className=" xl:w-[22%] sm:w-[45%] xs:w-[44%] xsm:w-[97%]  m-3 p-4 rounded-md shadow-md relative float-left"
                 key={index}
@@ -42,8 +42,8 @@ function RentProductComponent() {
                   src={row.imgUrl[0]}
                   alt="John"
                 />
-                <p className="float-left absolute text-white top-6 right-8 bg-yellow-600 w-20 text-center rounded-md">
-                  Thuê
+                <p className="float-left absolute text-white top-6 right-8 bg-red-600 w-20 text-center rounded-md">
+                  Bán
                 </p>
 
                 <div className="mt-3 ml-2 flex items-center">
@@ -102,4 +102,4 @@ function RentProductComponent() {
   );
 }
 
-export default observer(RentProductComponent);
+export default observer(BuyProductComponent);
