@@ -1,6 +1,5 @@
 import AnswerAndQuestion from "../../components/anserAndQuestion/AnswerAndQuestion";
 import BackgroundImgComponent from "../../components/backGroundImage/BackgroundImgComponent";
-import BuyProductComponent from "../../components/buyProduct/BuyProductComponent";
 import FooterComponent from "../../components/footer/FooterComponent";
 import HeaderComponent from "../../components/header/HeaderComponent";
 import KnowMoreComponent from "../../components/knowMore/KnowMoreComponent";
@@ -17,7 +16,7 @@ function HomeComponent({ shouldShowHeader }: any) {
       <BackgroundImgComponent />
       <MenuFilterComponent />
       <br></br>
-      <BuyProductComponent />
+      <RentProductComponent />
       <br></br>
       <RentProductComponent />
       <br></br>

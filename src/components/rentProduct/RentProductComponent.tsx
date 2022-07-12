@@ -1,20 +1,161 @@
+import imgtest from "../../assets/image/background-estate-img-main.jpg";
 import pool from "../../assets/image/pool.png";
 import bedroom from "../../assets/image/bedroom.png";
 import bathroom from "../../assets/image/bathroom.png";
 import location from "../../assets/image/location.png";
 import { observer } from "mobx-react-lite";
-import { useEffect, useState } from "react";
-import { getEstateByType } from "../../callApi/httpservice";
+import { useEffect } from "react";
+import { useStores } from "../../store";
+import { getEstateByFilter } from "../../callApi/httpservice";
 function RentProductComponent() {
-  const [dataRentHouse, setDataRentHouse] = useState<any>(null);
-  const getRentHouseHandler = async () => {
-    const type = "thue";
-    const result = await getEstateByType(type, 4, 0);
-    setDataRentHouse(result?.data);
-  };
+  const { renderingStore } = useStores();
+  const renderring = renderingStore.getRendering();
+  const testDataList = [
+    {
+      id: 1,
+      name: "Nhà Bán Gấp",
+
+      category: "Nhà phố",
+
+      price: 1200000000,
+
+      bed: 4,
+
+      toilet: 2,
+
+      m2: 123,
+
+      pool: true,
+
+      widthStreet: "7m",
+
+      notification: "Nhà cần bán gấp",
+
+      otoStreet: true,
+
+      gerion: "Vĩnh Phú",
+
+      status: 1,
+      type: "Bán",
+    },
+    {
+      id: 2,
+      name: "Biệt Thự Vĩnh Kim",
+
+      category: "Biệt Thự",
+
+      price: 6200000000,
+
+      bed: 8,
+
+      toilet: 3,
+
+      m2: 300,
+
+      pool: true,
+
+      widthStreet: "12m",
+
+      notification: "Biệt thự cần bán gấp",
+
+      otoStreet: true,
+
+      gerion: "Vĩnh Phú",
+
+      status: 1,
+      type: "Bán",
+    },
+    {
+      id: 3,
+      name: "Biệt Thự Trần Gia",
+
+      category: "Biệt Thự",
+
+      price: 5800000000,
+
+      bed: 7,
+
+      toilet: 3,
+
+      m2: 260,
+
+      pool: true,
+
+      widthStreet: "10m",
+
+      notification: "Biệt thự cần bán gấp",
+
+      otoStreet: true,
+
+      gerion: "Thuận An",
+
+      status: 1,
+      type: "Bán",
+    },
+    {
+      id: 4,
+      name: "Đất Nền Bình Chuẩn",
+
+      category: "Đất nền",
+
+      price: 3200000000,
+
+      bed: 0,
+
+      toilet: 0,
+
+      m2: 460,
+
+      pool: false,
+
+      widthStreet: "15m",
+
+      notification: "Đất nền cần bán gấp",
+
+      otoStreet: true,
+
+      gerion: "Bình Chuẩn",
+
+      status: 1,
+      type: "Cho thuê",
+    },
+    {
+      id: 4,
+      name: "Nhà Phố 4 Tầng",
+
+      category: "Nhà phố",
+
+      price: 4000000000,
+
+      bed: 4,
+
+      toilet: 2,
+
+      m2: 160,
+
+      pool: false,
+
+      widthStreet: "12m",
+
+      notification: "Nhà phố cần bán gấp",
+
+      otoStreet: true,
+
+      gerion: "Thuận An",
+
+      status: 1,
+      type: "Cho thuê",
+    },
+  ];
   useEffect(() => {
-    getRentHouseHandler();
-  }, []);
+    const category: any = renderingStore.getCategory();
+    const price: any = renderingStore.getPrice();
+    const gerion: any = renderingStore.getGerion();
+    const take = 4;
+    const skip = 0;
+    const data = getEstateByFilter(category, gerion, price, take, skip);
+    console.log(data);
+  }, [renderring]);
   return (
     <>
       <div className="xl:px-36 md:px-12 sm:px-6 xsm:px-4 flex justify-between items-center">
@@ -31,34 +172,29 @@ function RentProductComponent() {
     xsm:py-4 xsm:px-2 xsm:flex xsm:items-center flex-wrap
     "
       >
-        {dataRentHouse
-          ? dataRentHouse.map((row: any, index: any) => (
+        {testDataList
+          ? testDataList.slice(0, 4).map((row, index) => (
               <div
                 className=" xl:w-[22%] sm:w-[45%] xs:w-[44%] xsm:w-[97%]  m-3 p-4 rounded-md shadow-md relative float-left"
                 key={index}
               >
                 <img
                   className="w-full h-52 rounded-md"
-                  src={row.imgUrl[0]}
+                  src={imgtest}
                   alt="John"
                 />
-                <p className="float-left absolute text-white top-6 right-8 bg-yellow-600 w-20 text-center rounded-md">
-                  Thuê
-                </p>
-
+                {row.type === "Cho thuê" ? (
+                  <p className="float-left absolute text-white top-6 right-8 bg-red-600 w-20 text-center rounded-md">
+                    {row.type}
+                  </p>
+                ) : (
+                  <p className="float-left absolute text-white top-6 right-8 bg-orange-400 w-20 text-center rounded-md">
+                    {row.type}
+                  </p>
+                )}
                 <div className="mt-3 ml-2 flex items-center">
                   <img className="w-3 h-3 mr-4" src={location} alt="location" />
-                  <p>
-                    {row.gerion === "laithieu"
-                      ? "Lái Thiêu"
-                      : row.gerion === "binhnham"
-                      ? "Bình Nhâm"
-                      : row.gerion === "thuanan"
-                      ? "Thuận An"
-                      : row.gerion === "binhchuan"
-                      ? "Bình Chuẩn"
-                      : "Vĩnh Phú"}
-                  </p>
+                  <p>{row.gerion}</p>
                 </div>
 
                 <h2 className="ml-2 font-[500] mt-2 mb-2">{row.name}</h2>
